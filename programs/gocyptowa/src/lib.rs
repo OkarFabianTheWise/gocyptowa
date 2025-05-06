@@ -1,4 +1,5 @@
 use anchor_lang::prelude::*;
+
 pub mod constants;
 pub mod context;
 pub mod errors;
@@ -6,8 +7,8 @@ pub mod instructions;
 pub mod state;
 pub mod utils;
 
-use crate::send_message::SendMessageCtx;
-use crate::SendMessageCtx;
+use crate::context::broadcast_rollup_event::BroadcastEventCtx;
+use crate::context::send_rollup_message::SendMessageCtx;
 use instructions::*;
 
 declare_id!("FkYFD1kZjkb7dRQVaz9pAxnkMEA4iY5dEUmPcRZET8Yq");
@@ -17,16 +18,17 @@ pub mod gocyptowa {
     use super::*;
 
     pub fn broadcast_event(
-        ctx: Context<context::BroadcastEventCtx>,
+        ctx: Context<BroadcastEventCtx>,
         event: state::shared_pda::BroadcastEvent,
     ) -> Result<()> {
-        instructions::broadcast_event::handle(ctx, event)
+        instructions::broadcast_rollup_event::handle(ctx, event)
     }
 
     pub fn send_message(
-        ctx: Context<context::SendMessageCtx>,
+        ctx: Context<SendMessageCtx>,
+        rollup_id: u8,
         message: state::rollup_pda::Message,
     ) -> Result<()> {
-        instructions::send_message::handle(ctx, message)
+        instructions::send_rollup_message::handle(ctx, rollup_id, message)
     }
 }

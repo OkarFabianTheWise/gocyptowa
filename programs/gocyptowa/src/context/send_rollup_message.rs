@@ -1,8 +1,10 @@
+// route: src/context/send_message.rs
 use crate::constants::*;
 use crate::state::rollup_pda::*;
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
+#[instruction(rollup_id: u8)]
 pub struct SendMessageCtx<'info> {
     #[account(mut, seeds = [ROLLUP_PDA_SEED, &[rollup_id]], bump)]
     pub rollup_pda: Account<'info, RollupPda>,
