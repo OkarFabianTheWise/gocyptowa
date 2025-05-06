@@ -1,9 +1,10 @@
-use crate::context::send_rollup_message::SendMessageCtx;
-use crate::state::rollup_pda::*;
+// instructions/send_message.rs
+use crate::context::send_message::SendMessageCtx;
+use crate::state::Message;
 use anchor_lang::prelude::*;
 
-pub fn handle(ctx: Context<SendMessageCtx>, rollup_id: u8, message: Message) -> Result<()> {
-    let rollup_pda = &mut ctx.accounts.rollup_pda;
-    rollup_pda.messages.push(message);
+pub fn handle(ctx: Context<SendMessageCtx>, _rollup_id: u8, message: Message) -> Result<()> {
+    let pda = &mut ctx.accounts.rollup_pda;
+    pda.messages.push(message);
     Ok(())
 }

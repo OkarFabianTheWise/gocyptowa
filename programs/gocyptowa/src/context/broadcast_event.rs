@@ -1,6 +1,6 @@
 // route: src/context/broadcast_event.rs
 use crate::constants::*;
-use crate::state::shared_pda::*;
+use crate::state::SharedPda;
 use anchor_lang::prelude::*;
 
 #[derive(Accounts)]

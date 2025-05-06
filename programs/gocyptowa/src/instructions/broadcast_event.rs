@@ -1,10 +1,14 @@
-// route: src/instructions/broadcast_event.rs
-use crate::context::broadcast_rollup_event::BroadcastEventCtx;
-use crate::state::shared_pda::*;
+// instructions/broadcast_event.rs
+use crate::context::broadcast_event::BroadcastEventCtx;
+use crate::state::{BroadcastEvent, EventPayload};
 use anchor_lang::prelude::*;
 
-pub fn handle(ctx: Context<BroadcastEventCtx>, event: BroadcastEvent) -> Result<()> {
-    let shared_pda = &mut ctx.accounts.shared_pda;
-    shared_pda.global_events.push(event);
+pub fn handle(ctx: Context<BroadcastEventCtx>, topic: String, data: Vec<u8>) -> Result<()> {
+    let shared = &mut ctx.accounts.shared_pda;
+    let event = BroadcastEvent {
+        topic,
+        payload: EventPayload { data },
+    };
+    shared.events.push(event);
     Ok(())
 }

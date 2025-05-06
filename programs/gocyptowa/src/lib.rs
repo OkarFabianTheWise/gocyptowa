@@ -1,15 +1,16 @@
+// lib.rs
 use anchor_lang::prelude::*;
-
 pub mod constants;
 pub mod context;
-pub mod errors;
 pub mod instructions;
 pub mod state;
-pub mod utils;
 
-use crate::context::broadcast_rollup_event::BroadcastEventCtx;
-use crate::context::send_rollup_message::SendMessageCtx;
+use context::broadcast_event::BroadcastEventCtx;
+use context::init_shared::InitializeSharedPda;
+use context::send_message::SendMessageCtx;
 use instructions::*;
+use instructions::*;
+use state::Message;
 
 declare_id!("FkYFD1kZjkb7dRQVaz9pAxnkMEA4iY5dEUmPcRZET8Yq");
 
@@ -17,18 +18,23 @@ declare_id!("FkYFD1kZjkb7dRQVaz9pAxnkMEA4iY5dEUmPcRZET8Yq");
 pub mod gocyptowa {
     use super::*;
 
-    pub fn broadcast_event(
-        ctx: Context<BroadcastEventCtx>,
-        event: state::shared_pda::BroadcastEvent,
-    ) -> Result<()> {
-        instructions::broadcast_rollup_event::handle(ctx, event)
-    }
-
     pub fn send_message(
         ctx: Context<SendMessageCtx>,
         rollup_id: u8,
-        message: state::rollup_pda::Message,
+        message: Message,
     ) -> Result<()> {
-        instructions::send_rollup_message::handle(ctx, rollup_id, message)
+        send_message::handle(ctx, rollup_id, message)
+    }
+
+    pub fn broadcast_event(
+        ctx: Context<BroadcastEventCtx>,
+        topic: String,
+        data: Vec<u8>,
+    ) -> Result<()> {
+        broadcast_event::handle(ctx, topic, data)
+    }
+
+    pub fn initialize_shared_pda(ctx: Context<InitializeSharedPda>) -> Result<()> {
+        init_shared::handle(ctx)
     }
 }
