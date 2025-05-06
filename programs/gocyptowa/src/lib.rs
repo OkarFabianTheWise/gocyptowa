@@ -1,16 +1,15 @@
-// lib.rs
 use anchor_lang::prelude::*;
+
 pub mod constants;
 pub mod context;
+pub mod errors;
 pub mod instructions;
 pub mod state;
+pub mod utils;
 
-use context::broadcast_event::BroadcastEventCtx;
-use context::init_shared::InitializeSharedPda;
-use context::send_message::SendMessageCtx;
+use constants::*;
+use context::*;
 use instructions::*;
-use instructions::*;
-use state::Message;
 
 declare_id!("FkYFD1kZjkb7dRQVaz9pAxnkMEA4iY5dEUmPcRZET8Yq");
 
@@ -21,9 +20,9 @@ pub mod gocyptowa {
     pub fn send_message(
         ctx: Context<SendMessageCtx>,
         rollup_id: u8,
-        message: Message,
+        message: state::Message,
     ) -> Result<()> {
-        send_message::handle(ctx, rollup_id, message)
+        instructions::send_message::process(ctx, rollup_id, message)
     }
 
     pub fn broadcast_event(
@@ -31,10 +30,10 @@ pub mod gocyptowa {
         topic: String,
         data: Vec<u8>,
     ) -> Result<()> {
-        broadcast_event::handle(ctx, topic, data)
+        instructions::broadcast_event::process(ctx, topic, data)
     }
 
     pub fn initialize_shared_pda(ctx: Context<InitializeSharedPda>) -> Result<()> {
-        init_shared::handle(ctx)
+        instructions::init_shared::process(ctx)
     }
 }

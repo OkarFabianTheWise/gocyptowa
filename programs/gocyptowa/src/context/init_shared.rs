@@ -8,7 +8,7 @@ pub struct InitializeSharedPda<'info> {
     #[account(
         init,
         payer = signer,
-        space = 8 + 4 + (10 * (32 + 200)),
+        space = 8 + 4 + (10 * (32 + 200)), // Space for header + vec len + estimated event size
         seeds = [SHARED_PDA_SEED],
         bump
     )]
