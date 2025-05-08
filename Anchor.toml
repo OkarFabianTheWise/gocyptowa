@@ -5,13 +5,15 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-gocyptowa = "FkYFD1kZjkb7dRQVaz9pAxnkMEA4iY5dEUmPcRZET8Yq"
+gocyptowa = "BgVCaSj3YyfAxnDJZ4YrBag7CCTc8fPPqY7NEr9sh9Cr"
+[programs.devnet]
+gocyptowa = "BgVCaSj3YyfAxnDJZ4YrBag7CCTc8fPPqY7NEr9sh9Cr"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "Devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
