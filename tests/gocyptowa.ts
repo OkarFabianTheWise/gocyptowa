@@ -277,236 +277,236 @@ describe("gocyptowa", () => {
     }
   });
   
-  // it("Can broadcast events to the shared PDA", async () => {
-  //   try {
-  //     // Initialize shared PDA if it doesn't exist
-  //     try {
-  //       console.log("Initializing shared PDA...");
-  //       await program.methods
-  //         .initializeSharedPda()
-  //         .accounts({
-  //           sharedPda: sharedPda,
-  //           signer: wallet.publicKey,
-  //           systemProgram: anchor.web3.SystemProgram.programId,
-  //         })
-  //         .rpc();
-  //       console.log("Shared PDA initialized successfully");
-  //     } catch (error) {
-  //       if (error.toString().includes("already in use")) {
-  //         console.log("Shared PDA already exists, continuing with test");
-  //       } else {
-  //         console.error("Error initializing shared PDA:", error);
-  //         throw error;
-  //       }
-  //     }
+  it("Can broadcast events to the shared PDA", async () => {
+    try {
+      // Initialize shared PDA if it doesn't exist
+      try {
+        console.log("Initializing shared PDA...");
+        await program.methods
+          .initializeSharedPda()
+          .accounts({
+            sharedPda: sharedPda,
+            signer: wallet.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .rpc();
+        console.log("Shared PDA initialized successfully");
+      } catch (error) {
+        if (error.toString().includes("already in use")) {
+          console.log("Shared PDA already exists, continuing with test");
+        } else {
+          console.error("Error initializing shared PDA:", error);
+          throw error;
+        }
+      }
   
-  //     // Wait a bit for initialization to complete
-  //     await sleep(1000);
+      // Wait a bit for initialization to complete
+      await sleep(1000);
   
-  //     // Broadcast an event
-  //     const topic = "new_block";
-  //     const eventData = { 
-  //       height: 1000, 
-  //       hash: "0xabc123", 
-  //       timestamp: new Date().toISOString() 
-  //     };
-  //     const serializedData = Buffer.from(JSON.stringify(eventData));
+      // Broadcast an event
+      const topic = "new_block";
+      const eventData = { 
+        height: 1000, 
+        hash: "0xabc123", 
+        timestamp: new Date().toISOString() 
+      };
+      const serializedData = Buffer.from(JSON.stringify(eventData));
       
-  //     console.log("Broadcasting event...");
-  //     await program.methods
-  //       .broadcastEvent(
-  //         topic, 
-  //         Array.from(serializedData)
-  //       )
-  //       .accounts({
-  //         sharedPda: sharedPda,
-  //         signer: wallet.publicKey,
-  //       })
-  //       .rpc();
+      console.log("Broadcasting event...");
+      await program.methods
+        .broadcastEvent(
+          topic, 
+          serializedData
+        )
+        .accounts({
+          sharedPda: sharedPda,
+          signer: wallet.publicKey,
+        })
+        .rpc();
   
-  //     // Wait a bit for event to be processed
-  //     await sleep(1000);
+      // Wait a bit for event to be processed
+      await sleep(1000);
   
-  //     // Verify the event was stored correctly
-  //     console.log("Verifying event was stored...");
-  //     const sharedPdaAccount = await program.account.sharedPda.fetch(sharedPda);
-  //     expect(sharedPdaAccount.events).to.be.an("array");
-  //     expect(sharedPdaAccount.events.length).to.be.at.least(1);
+      // Verify the event was stored correctly
+      console.log("Verifying event was stored...");
+      const sharedPdaAccount = await program.account.sharedPda.fetch(sharedPda);
+      expect(sharedPdaAccount.events).to.be.an("array");
+      expect(sharedPdaAccount.events.length).to.be.at.least(1);
       
-  //     // Find the event we just sent
-  //     const newBlockEvent = sharedPdaAccount.events.find(event => 
-  //       event.topic === topic
-  //     );
-  //     expect(newBlockEvent).to.not.be.undefined;
-  //     expect(newBlockEvent.topic).to.equal(topic);
+      // Find the event we just sent
+      const newBlockEvent = sharedPdaAccount.events.find(event => 
+        event.topic === topic
+      );
+      expect(newBlockEvent).to.not.be.undefined;
+      expect(newBlockEvent.topic).to.equal(topic);
       
-  //     // Decode and verify payload
-  //     const payloadData = Buffer.from(newBlockEvent.payload.data);
-  //     const decodedData = JSON.parse(payloadData.toString());
-  //     expect(decodedData.height).to.equal(eventData.height);
-  //     expect(decodedData.hash).to.equal(eventData.hash);
+      // Decode and verify payload
+      const payloadData = Buffer.from(newBlockEvent.payload.data);
+      const decodedData = JSON.parse(payloadData.toString());
+      expect(decodedData.height).to.equal(eventData.height);
+      expect(decodedData.hash).to.equal(eventData.hash);
       
-  //     console.log("Test completed successfully");
-  //   } catch (error) {
-  //     console.error("Error broadcasting event:", error);
-  //     throw error;
-  //   }
-  // });
+      console.log("Test completed successfully");
+    } catch (error) {
+      console.error("Error broadcasting event:", error);
+      throw error;
+    }
+  });
   
-  // it("Can broadcast multiple events with different topics", async () => {
-  //   try {
-  //     // Initialize shared PDA if it doesn't exist
-  //     try {
-  //       console.log("Initializing shared PDA...");
-  //       await program.methods
-  //         .initializeSharedPda()
-  //         .accounts({
-  //           sharedPda: sharedPda,
-  //           signer: wallet.publicKey,
-  //           systemProgram: anchor.web3.SystemProgram.programId,
-  //         })
-  //         .rpc();
-  //       console.log("Shared PDA initialized successfully");
-  //     } catch (error) {
-  //       if (error.toString().includes("already in use")) {
-  //         console.log("Shared PDA already exists, continuing with test");
-  //       } else {
-  //         console.error("Error initializing shared PDA:", error);
-  //         throw error;
-  //       }
-  //     }
+  it("Can broadcast multiple events with different topics", async () => {
+    try {
+      // Initialize shared PDA if it doesn't exist
+      try {
+        console.log("Initializing shared PDA...");
+        await program.methods
+          .initializeSharedPda()
+          .accounts({
+            sharedPda: sharedPda,
+            signer: wallet.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .rpc();
+        console.log("Shared PDA initialized successfully");
+      } catch (error) {
+        if (error.toString().includes("already in use")) {
+          console.log("Shared PDA already exists, continuing with test");
+        } else {
+          console.error("Error initializing shared PDA:", error);
+          throw error;
+        }
+      }
   
-  //     // Wait a bit for initialization to complete
-  //     await sleep(1000);
+      // Wait a bit for initialization to complete
+      await sleep(1000);
   
-  //     // Broadcast transaction event
-  //     const txTopic = "transaction";
-  //     const txData = { 
-  //       txId: "0x123456", 
-  //       sender: user1.publicKey.toString(), 
-  //       receiver: user2.publicKey.toString(),
-  //       amount: 100,
-  //     };
+      // Broadcast transaction event
+      const txTopic = "transaction";
+      const txData = { 
+        txId: "0x123456", 
+        sender: user1.publicKey.toString(), 
+        receiver: user2.publicKey.toString(),
+        amount: 100,
+      };
       
-  //     console.log("Broadcasting transaction event...");
-  //     await program.methods
-  //       .broadcastEvent(
-  //         txTopic, 
-  //         Array.from(Buffer.from(JSON.stringify(txData)))
-  //       )
-  //       .accounts({
-  //         sharedPda: sharedPda,
-  //         signer: wallet.publicKey,
-  //       })
-  //       .rpc();
+      console.log("Broadcasting transaction event...");
+      await program.methods
+        .broadcastEvent(
+          txTopic, 
+          Array.from(Buffer.from(JSON.stringify(txData)))
+        )
+        .accounts({
+          sharedPda: sharedPda,
+          signer: wallet.publicKey,
+        })
+        .rpc();
   
-  //     // Broadcast state update event
-  //     const stateTopic = "state_update";
-  //     const stateData = { 
-  //       rollupId: rollupId1, 
-  //       newState: "0xabcdef123456", 
-  //       stateRoot: "0xfedcba654321"
-  //     };
+      // Broadcast state update event
+      const stateTopic = "state_update";
+      const stateData = { 
+        rollupId: rollupId1, 
+        newState: "0xabcdef123456", 
+        stateRoot: "0xfedcba654321"
+      };
       
-  //     console.log("Broadcasting state update event...");
-  //     await program.methods
-  //       .broadcastEvent(
-  //         stateTopic, 
-  //         Array.from(Buffer.from(JSON.stringify(stateData)))
-  //       )
-  //       .accounts({
-  //         sharedPda: sharedPda,
-  //         signer: wallet.publicKey,
-  //       })
-  //       .rpc();
+      console.log("Broadcasting state update event...");
+      await program.methods
+        .broadcastEvent(
+          stateTopic, 
+          Array.from(Buffer.from(JSON.stringify(stateData)))
+        )
+        .accounts({
+          sharedPda: sharedPda,
+          signer: wallet.publicKey,
+        })
+        .rpc();
   
-  //     // Wait a bit for events to be processed
-  //     await sleep(1000);
+      // Wait a bit for events to be processed
+      await sleep(1000);
   
-  //     // Verify events were stored correctly
-  //     console.log("Verifying events were stored...");
-  //     const sharedPdaAccount = await program.account.sharedPda.fetch(sharedPda);
-  //     expect(sharedPdaAccount.events).to.be.an("array");
+      // Verify events were stored correctly
+      console.log("Verifying events were stored...");
+      const sharedPdaAccount = await program.account.sharedPda.fetch(sharedPda);
+      expect(sharedPdaAccount.events).to.be.an("array");
       
-  //     // Find the transaction event
-  //     const txEvent = sharedPdaAccount.events.find(event => 
-  //       event.topic === txTopic
-  //     );
-  //     expect(txEvent).to.not.be.undefined;
-  //     expect(txEvent.topic).to.equal(txTopic);
-  //     const txPayload = JSON.parse(Buffer.from(txEvent.payload.data).toString());
-  //     expect(txPayload.txId).to.equal(txData.txId);
-  //     expect(txPayload.amount).to.equal(txData.amount);
+      // Find the transaction event
+      const txEvent = sharedPdaAccount.events.find(event => 
+        event.topic === txTopic
+      );
+      expect(txEvent).to.not.be.undefined;
+      expect(txEvent.topic).to.equal(txTopic);
+      const txPayload = JSON.parse(Buffer.from(txEvent.payload.data).toString());
+      expect(txPayload.txId).to.equal(txData.txId);
+      expect(txPayload.amount).to.equal(txData.amount);
       
-  //     // Find the state update event
-  //     const stateEvent = sharedPdaAccount.events.find(event => 
-  //       event.topic === stateTopic
-  //     );
-  //     expect(stateEvent).to.not.be.undefined;
-  //     expect(stateEvent.topic).to.equal(stateTopic);
-  //     const statePayload = JSON.parse(Buffer.from(stateEvent.payload.data).toString());
-  //     expect(statePayload.rollupId).to.equal(stateData.rollupId);
-  //     expect(statePayload.stateRoot).to.equal(stateData.stateRoot);
+      // Find the state update event
+      const stateEvent = sharedPdaAccount.events.find(event => 
+        event.topic === stateTopic
+      );
+      expect(stateEvent).to.not.be.undefined;
+      expect(stateEvent.topic).to.equal(stateTopic);
+      const statePayload = JSON.parse(Buffer.from(stateEvent.payload.data).toString());
+      expect(statePayload.rollupId).to.equal(stateData.rollupId);
+      expect(statePayload.stateRoot).to.equal(stateData.stateRoot);
       
-  //     console.log("Test completed successfully");
-  //   } catch (error) {
-  //     console.error("Error broadcasting multiple events:", error);
-  //     throw error;
-  //   }
-  // });
+      console.log("Test completed successfully");
+    } catch (error) {
+      console.error("Error broadcasting multiple events:", error);
+      throw error;
+    }
+  });
   
-  // it("Demonstrates filtering events by topic", async () => {
-  //   try {
-  //     // Initialize shared PDA if it doesn't exist
-  //     try {
-  //       console.log("Initializing shared PDA...");
-  //       await program.methods
-  //         .initializeSharedPda()
-  //         .accounts({
-  //           sharedPda: sharedPda,
-  //           signer: wallet.publicKey,
-  //           systemProgram: anchor.web3.SystemProgram.programId,
-  //         })
-  //         .rpc();
-  //       console.log("Shared PDA initialized successfully");
-  //     } catch (error) {
-  //       if (error.toString().includes("already in use")) {
-  //         console.log("Shared PDA already exists, continuing with test");
-  //       } else {
-  //         console.error("Error initializing shared PDA:", error);
-  //         throw error;
-  //       }
-  //     }
+  it("Demonstrates filtering events by topic", async () => {
+    try {
+      // Initialize shared PDA if it doesn't exist
+      try {
+        console.log("Initializing shared PDA...");
+        await program.methods
+          .initializeSharedPda()
+          .accounts({
+            sharedPda: sharedPda,
+            signer: wallet.publicKey,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .rpc();
+        console.log("Shared PDA initialized successfully");
+      } catch (error) {
+        if (error.toString().includes("already in use")) {
+          console.log("Shared PDA already exists, continuing with test");
+        } else {
+          console.error("Error initializing shared PDA:", error);
+          throw error;
+        }
+      }
   
-  //     // Wait a bit for initialization to complete
-  //     await sleep(1000);
+      // Wait a bit for initialization to complete
+      await sleep(1000);
   
-  //     // Fetch the shared PDA account
-  //     console.log("Fetching shared PDA account...");
-  //     const sharedPdaAccount = await program.account.sharedPda.fetch(sharedPda);
+      // Fetch the shared PDA account
+      console.log("Fetching shared PDA account...");
+      const sharedPdaAccount = await program.account.sharedPda.fetch(sharedPda);
       
-  //     // Filter events by topic
-  //     const txEvents = sharedPdaAccount.events.filter(event => event.topic === "transaction");
-  //     const stateEvents = sharedPdaAccount.events.filter(event => event.topic === "state_update");
-  //     const blockEvents = sharedPdaAccount.events.filter(event => event.topic === "new_block");
+      // Filter events by topic
+      const txEvents = sharedPdaAccount.events.filter(event => event.topic === "transaction");
+      const stateEvents = sharedPdaAccount.events.filter(event => event.topic === "state_update");
+      const blockEvents = sharedPdaAccount.events.filter(event => event.topic === "new_block");
       
-  //     console.log(`Found ${txEvents.length} transaction events`);
-  //     console.log(`Found ${stateEvents.length} state update events`);
-  //     console.log(`Found ${blockEvents.length} block events`);
+      console.log(`Found ${txEvents.length} transaction events`);
+      console.log(`Found ${stateEvents.length} state update events`);
+      console.log(`Found ${blockEvents.length} block events`);
       
-  //     // Process transaction events
-  //     for (const event of txEvents) {
-  //       const data = JSON.parse(Buffer.from(event.payload.data).toString());
-  //       console.log("Transaction event data:", data);
-  //       // In a real implementation, you'd handle this transaction data
-  //     }
+      // Process transaction events
+      for (const event of txEvents) {
+        const data = JSON.parse(Buffer.from(event.payload.data).toString());
+        console.log("Transaction event data:", data);
+        // implementation -- handle transaction data
+      }
       
-  //     console.log("Test completed successfully");
-  //   } catch (error) {
-  //     console.error("Error filtering events:", error);
-  //     throw error;
-  //   }
-  // });
+      console.log("Test completed successfully");
+    } catch (error) {
+      console.error("Error filtering events:", error);
+      throw error;
+    }
+  });
   
   // it("Simulates a cross-rollup communication scenario", async () => {
   //   try {
@@ -670,4 +670,6 @@ describe("gocyptowa", () => {
   //     throw error;
   //   }
   // });
+
+
 });

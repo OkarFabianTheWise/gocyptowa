@@ -1,5 +1,5 @@
 // context/send_message.rs
-use crate::constants::*;
+use crate::constants::ROLLUP_PDA_SEED;
 use crate::state::RollupPda;
 use anchor_lang::prelude::*;
 
