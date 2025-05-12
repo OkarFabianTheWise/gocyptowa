@@ -4,10 +4,8 @@
 resolution = true
 skip-lint = false
 
-[programs.localnet]
-gocyptowa = "BgVCaSj3YyfAxnDJZ4YrBag7CCTc8fPPqY7NEr9sh9Cr"
 [programs.devnet]
-gocyptowa = "BgVCaSj3YyfAxnDJZ4YrBag7CCTc8fPPqY7NEr9sh9Cr"
+gocyptowa = "GZ5WFnojWrqmvkUq75xZkTbvL4kAkvPFJA3pvHX5fv8K"
 
 [registry]
 url = "https://api.apr.dev"

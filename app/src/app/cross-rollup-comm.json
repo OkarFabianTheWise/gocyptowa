@@ -1,0 +1,1376 @@
+{
+  "address": "GZ5WFnojWrqmvkUq75xZkTbvL4kAkvPFJA3pvHX5fv8K",
+  "metadata": {
+    "name": "cross_rollup_comm",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Cross Rollup Communication Protocol for Solana"
+  },
+  "docs": [
+    "Program implementation"
+  ],
+  "instructions": [
+    {
+      "name": "broadcast_event",
+      "discriminator": [
+        174,
+        108,
+        243,
+        222,
+        235,
+        228,
+        217,
+        230
+      ],
+      "accounts": [
+        {
+          "name": "shared_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  101,
+                  100,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "source_rollup",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "rollup_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "broadcaster",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "rollup_id",
+          "type": "u8"
+        },
+        {
+          "name": "topic",
+          "type": "string"
+        },
+        {
+          "name": "payload",
+          "type": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "deactivate_rollup",
+      "discriminator": [
+        241,
+        1,
+        74,
+        191,
+        121,
+        174,
+        193,
+        16
+      ],
+      "accounts": [
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "rollup_pda",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "rollup_pda.rollup_id",
+                "account": "RollupPda"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_price_feed",
+      "discriminator": [
+        68,
+        180,
+        81,
+        20,
+        102,
+        213,
+        145,
+        233
+      ],
+      "accounts": [
+        {
+          "name": "price_feed",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  105,
+                  99,
+                  101,
+                  95,
+                  102,
+                  101,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "pair"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "pair",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "initialize_registry",
+      "discriminator": [
+        189,
+        181,
+        20,
+        17,
+        174,
+        57,
+        249,
+        59
+      ],
+      "accounts": [
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_shared_pda",
+      "discriminator": [
+        77,
+        52,
+        6,
+        209,
+        211,
+        0,
+        155,
+        142
+      ],
+      "accounts": [
+        {
+          "name": "shared_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  101,
+                  100,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "mark_messages_as_read",
+      "discriminator": [
+        203,
+        7,
+        78,
+        211,
+        18,
+        199,
+        134,
+        172
+      ],
+      "accounts": [
+        {
+          "name": "rollup_pda",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "rollup_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reader_rollup",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "reader_rollup_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reader",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "rollup_id",
+          "type": "u8"
+        },
+        {
+          "name": "reader_rollup_id",
+          "type": "u8"
+        },
+        {
+          "name": "sequence",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "reactivate_rollup",
+      "discriminator": [
+        141,
+        119,
+        35,
+        43,
+        178,
+        206,
+        120,
+        239
+      ],
+      "accounts": [
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "rollup_pda",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "rollup_pda.rollup_id",
+                "account": "RollupPda"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "register_rollup",
+      "discriminator": [
+        227,
+        174,
+        112,
+        207,
+        206,
+        119,
+        51,
+        183
+      ],
+      "accounts": [
+        {
+          "name": "rollup_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "rollup_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "rollup_id",
+          "type": "u8"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "metadata",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "send_message",
+      "discriminator": [
+        57,
+        40,
+        34,
+        178,
+        189,
+        10,
+        65,
+        26
+      ],
+      "accounts": [
+        {
+          "name": "target_rollup_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "target_rollup_pda.rollup_id",
+                "account": "RollupPda"
+              }
+            ]
+          }
+        },
+        {
+          "name": "source_rollup_pda",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "source_rollup_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sender",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "source_rollup_id",
+          "type": "u8"
+        },
+        {
+          "name": "content",
+          "type": "bytes"
+        },
+        {
+          "name": "msg_type",
+          "type": {
+            "defined": {
+              "name": "MessageType"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_price",
+      "discriminator": [
+        61,
+        34,
+        117,
+        155,
+        75,
+        34,
+        123,
+        208
+      ],
+      "accounts": [
+        {
+          "name": "price_feed",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  105,
+                  99,
+                  101,
+                  95,
+                  102,
+                  101,
+                  101,
+                  100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "pair"
+              }
+            ]
+          }
+        },
+        {
+          "name": "source_rollup",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "rollup_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "updater",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "rollup_id",
+          "type": "u8"
+        },
+        {
+          "name": "pair",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "u64"
+        },
+        {
+          "name": "decimals",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "update_rollup_metadata",
+      "discriminator": [
+        86,
+        62,
+        147,
+        11,
+        133,
+        81,
+        0,
+        230
+      ],
+      "accounts": [
+        {
+          "name": "registry",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  103,
+                  105,
+                  115,
+                  116,
+                  114,
+                  121,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "rollup_pda",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  108,
+                  108,
+                  117,
+                  112,
+                  95,
+                  112,
+                  100,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "rollup_pda.rollup_id",
+                "account": "RollupPda"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "metadata",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PriceFeed",
+      "discriminator": [
+        189,
+        103,
+        252,
+        23,
+        152,
+        35,
+        243,
+        156
+      ]
+    },
+    {
+      "name": "RollupPda",
+      "discriminator": [
+        58,
+        243,
+        202,
+        175,
+        209,
+        36,
+        170,
+        171
+      ]
+    },
+    {
+      "name": "RollupRegistry",
+      "discriminator": [
+        104,
+        248,
+        208,
+        152,
+        119,
+        74,
+        246,
+        112
+      ]
+    },
+    {
+      "name": "SharedPda",
+      "discriminator": [
+        243,
+        43,
+        31,
+        7,
+        12,
+        7,
+        185,
+        97
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "EventBroadcast",
+      "discriminator": [
+        200,
+        148,
+        239,
+        171,
+        57,
+        56,
+        158,
+        52
+      ]
+    },
+    {
+      "name": "MessageSent",
+      "discriminator": [
+        116,
+        70,
+        224,
+        76,
+        128,
+        28,
+        110,
+        55
+      ]
+    },
+    {
+      "name": "PriceUpdated",
+      "discriminator": [
+        154,
+        72,
+        87,
+        150,
+        246,
+        230,
+        23,
+        217
+      ]
+    },
+    {
+      "name": "RollupRegistered",
+      "discriminator": [
+        217,
+        160,
+        182,
+        74,
+        50,
+        105,
+        234,
+        17
+      ]
+    },
+    {
+      "name": "RollupStatusChanged",
+      "discriminator": [
+        45,
+        6,
+        195,
+        54,
+        54,
+        126,
+        234,
+        209
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ContentTooLong",
+      "msg": "Content exceeds maximum allowed length"
+    },
+    {
+      "code": 6001,
+      "name": "TopicTooLong",
+      "msg": "Topic exceeds maximum allowed length"
+    },
+    {
+      "code": 6002,
+      "name": "NameTooLong",
+      "msg": "Name exceeds maximum allowed length"
+    },
+    {
+      "code": 6003,
+      "name": "MetadataTooLong",
+      "msg": "Metadata exceeds maximum allowed length"
+    },
+    {
+      "code": 6004,
+      "name": "RollupIdAlreadyExists",
+      "msg": "Rollup ID already exists"
+    },
+    {
+      "code": 6005,
+      "name": "RollupNotFound",
+      "msg": "Rollup not found in registry"
+    },
+    {
+      "code": 6006,
+      "name": "CannotSendToSelf",
+      "msg": "Cannot send message to self"
+    },
+    {
+      "code": 6007,
+      "name": "MessageQueueFull",
+      "msg": "Message queue is full"
+    }
+  ],
+  "types": [
+    {
+      "name": "BroadcastEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "from",
+            "type": "pubkey"
+          },
+          {
+            "name": "topic",
+            "type": "string"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "payload",
+            "type": "bytes"
+          },
+          {
+            "name": "sequence",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EventBroadcast",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "from",
+            "type": "pubkey"
+          },
+          {
+            "name": "topic",
+            "type": "string"
+          },
+          {
+            "name": "sequence",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Message",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "from",
+            "type": "pubkey"
+          },
+          {
+            "name": "to",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "msg_type",
+            "type": {
+              "defined": {
+                "name": "MessageType"
+              }
+            }
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "content",
+            "type": "bytes"
+          },
+          {
+            "name": "sequence",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MessageSent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "from",
+            "type": "pubkey"
+          },
+          {
+            "name": "to",
+            "type": "pubkey"
+          },
+          {
+            "name": "sequence",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MessageType",
+      "docs": [
+        "Data Types"
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "StateUpdate"
+          },
+          {
+            "name": "CrossRollupMessage"
+          },
+          {
+            "name": "PriceUpdate"
+          },
+          {
+            "name": "SystemAnnouncement"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PriceData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "decimals",
+            "type": "u8"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "source",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PriceFeed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pair",
+            "type": "string"
+          },
+          {
+            "name": "prices",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "PriceData"
+                }
+              }
+            }
+          },
+          {
+            "name": "last_update",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PriceUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pair",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "decimals",
+            "type": "u8"
+          },
+          {
+            "name": "source",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RollupInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "u8"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "pda_address",
+            "type": "pubkey"
+          },
+          {
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "name": "metadata",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RollupPda",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "rollup_id",
+            "type": "u8"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "messages",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Message"
+                }
+              }
+            }
+          },
+          {
+            "name": "last_processed_sequence",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RollupRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "rollup_id",
+            "type": "u8"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "pda_address",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RollupRegistry",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "rollups",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "RollupInfo"
+                }
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RollupStatusChanged",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "rollup_id",
+            "type": "u8"
+          },
+          {
+            "name": "active",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SharedPda",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "events",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "BroadcastEvent"
+                }
+              }
+            }
+          },
+          {
+            "name": "last_sequence",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

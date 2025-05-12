@@ -1,8 +1,13 @@
 // instructions/init_shared.rs
-use crate::context::InitializeSharedPda;
 use anchor_lang::prelude::*;
 
-pub fn process(ctx: Context<InitializeSharedPda>) -> Result<()> {
-    ctx.accounts.shared_pda.events = Vec::new();
+use crate::constants::*;
+use crate::context::*;
+
+pub fn initialize_shared_pda(ctx: Context<InitializeSharedPdaCtx>) -> Result<()> {
+    let shared_pda = &mut ctx.accounts.shared_pda;
+    shared_pda.events = Vec::with_capacity(MAX_EVENTS);
+    shared_pda.last_sequence = 0;
+    shared_pda.bump = ctx.bumps.shared_pda;
     Ok(())
 }
